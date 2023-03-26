@@ -25,8 +25,8 @@ public class JobRunner implements ApplicationRunner {
 
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("user", "BATCH_SYSTEM")
-                .addLong("seq", 2L)
-                .addDate("date", new Date())
+//                .addLong("seq", 2L)
+//                .addDate("date", new Date())
                 .toJobParameters();
 
         jobLauncher.run(helloJob, jobParameters);

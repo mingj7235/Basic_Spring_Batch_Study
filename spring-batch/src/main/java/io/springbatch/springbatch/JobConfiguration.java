@@ -37,16 +37,6 @@ public class JobConfiguration {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) throws Exception {
-                        JobParameters jobParameters = contribution.getStepExecution().getJobExecution().getJobParameters();
-                        jobParameters.getString("user");
-                        jobParameters.getDate("time");
-                        jobParameters.getLong("seq");
-
-                        Map<String, Object> jobParametersFromChunk = chunkContext.getStepContext().getJobParameters();
-                        jobParametersFromChunk.get("user");
-                        jobParametersFromChunk.get("time");
-                        jobParametersFromChunk.get("seq");
-
                         System.out.println("step1 was executed");
                         return RepeatStatus.FINISHED;
                     }
@@ -61,6 +51,7 @@ public class JobConfiguration {
                     @Override
                     public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) throws Exception {
                         System.out.println("step2 was executed");
+//                        throw new RuntimeException("step2 has failed");
                         return RepeatStatus.FINISHED;
                     }
                 })
