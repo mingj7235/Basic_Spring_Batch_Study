@@ -2,6 +2,7 @@ package io.springbatch.springbatch;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -11,6 +12,8 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -34,6 +37,16 @@ public class JobConfiguration {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(final StepContribution contribution, final ChunkContext chunkContext) throws Exception {
+                        JobParameters jobParameters = contribution.getStepExecution().getJobExecution().getJobParameters();
+                        jobParameters.getString("user");
+                        jobParameters.getDate("time");
+                        jobParameters.getLong("seq");
+
+                        Map<String, Object> jobParametersFromChunk = chunkContext.getStepContext().getJobParameters();
+                        jobParametersFromChunk.get("user");
+                        jobParametersFromChunk.get("time");
+                        jobParametersFromChunk.get("seq");
+
                         System.out.println("step1 was executed");
                         return RepeatStatus.FINISHED;
                     }
